@@ -9,20 +9,23 @@ from scipy.sparse import hstack, csr_matrix
 import pandas as pd
 
 # nltk installation if not already present
-import nltk
 from nltk.data import find
 
 def ensure_nltk_resource(resource_name, download_name=None):
-    """
-    Check if an NLTK resource is already installed; download if missing.
-    """
+    import nltk
+    from nltk.data import find
     try:
         find(resource_name)
     except LookupError:
         nltk.download(download_name or resource_name.split('/')[-1], quiet=True)
 
-ensure_nltk_resource('tokenizers/punkt', 'punkt')
-ensure_nltk_resource('corpora/stopwords', 'stopwords')
+# Handle both old and new names
+for name in ['tokenizers/punkt', 'tokenizers/punkt_tab', 'corpora/stopwords']:
+    try:
+        ensure_nltk_resource(name)
+    except:
+        pass
+
 
 
 # Numeric features extractors
