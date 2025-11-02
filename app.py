@@ -19,7 +19,6 @@ def ensure_nltk_resource(resource_name, download_name=None):
     except LookupError:
         nltk.download(download_name or resource_name.split('/')[-1], quiet=True)
 
-# Handle both old and new names
 for name in ['tokenizers/punkt', 'tokenizers/punkt_tab', 'corpora/stopwords']:
     try:
         ensure_nltk_resource(name)
